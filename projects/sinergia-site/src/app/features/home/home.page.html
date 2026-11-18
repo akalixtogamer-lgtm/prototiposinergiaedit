@@ -1,0 +1,133 @@
+<!-- ===== Banner de destaque (hero) ===== -->
+<section class="hero" aria-labelledby="hero-title">
+  <!-- Vídeo de fundo: projetor → sala de cinema (decorativo; o conteúdo está no texto) -->
+  <kx-video-bg
+    class="hero-video"
+    [sources]="videoSources"
+    poster="video/hero-cinema-poster.webp"
+    [playLabel]="'home.hero.videoPlay' | kxT"
+    [pauseLabel]="'home.hero.videoPause' | kxT"
+  />
+  <div class="hero-shade" aria-hidden="true"></div>
+
+  <div class="kx-container hero-inner">
+    <div class="hero-copy">
+      <span class="kx-eyebrow eyebrow" kxReveal="fade-in">{{ 'home.hero.eyebrow' | kxT }}</span>
+      <h1 id="hero-title" class="hero-title" [kxSplitText]="'home.hero.title' | kxT"></h1>
+      <p class="hero-text" kxReveal [kxRevealDelay]="350">{{ 'home.hero.text' | kxT }}</p>
+      <div class="kx-row hero-ctas" kxReveal [kxRevealDelay]="500">
+        <a kxButton="accent" kxSize="lg" [routerLink]="'cinema' | kxPath">
+          <kx-icon name="film" class="kx-btn__icon" [size]="20" />
+          {{ 'home.hero.ctaCinema' | kxT }}
+        </a>
+        <a kxButton="ghost-inverse" kxSize="lg" [routerLink]="'cati' | kxPath">
+          <kx-icon name="headset" class="kx-btn__icon" [size]="20" />
+          {{ 'home.hero.ctaCati' | kxT }}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="kx-container hero-foot">
+    @if (seals().length) {
+      <ul class="sn-seals hero-seals" role="list" kxStagger>
+        @for (s of seals(); track s.k) {
+          <li kxReveal="fade-up"><i>{{ s.k }}</i>{{ s.label }}</li>
+        }
+      </ul>
+    }
+    <!-- Atalhos para as seções do site -->
+    <nav class="shortcuts" [attr.aria-label]="'home.shortcuts.title' | kxT">
+      <span class="kx-eyebrow">{{ 'home.shortcuts.eyebrow' | kxT }}</span>
+      <ul role="list" kxStagger>
+        @for (s of shortcuts(); track s.page) {
+          <li kxReveal="fade-up">
+            <a [routerLink]="s.page | kxPath"><kx-icon [name]="s.icon" [size]="18" />{{ s.title }}</a>
+          </li>
+        }
+      </ul>
+    </nav>
+  </div>
+</section>
+
+<!-- ===== Serviços: faixa horizontal com cards de recorte (ref. Addifico) ===== -->
+<kx-service-rail
+  class="rail"
+  [eyebrow]="'home.services.eyebrow' | kxT"
+  [title]="'home.services.title' | kxT"
+  [lead]="'home.services.lead' | kxT"
+  [prevLabel]="'home.services.prev' | kxT"
+  [nextLabel]="'home.services.next' | kxT"
+>
+  @for (s of services(); track s.title; let i = $index) {
+    <kx-service-card
+      [icon]="s.icon"
+      [title]="s.title"
+      [text]="s.text"
+      [link]="s.page | kxPath"
+      [fragment]="s.fragment || undefined"
+    />
+  }
+</kx-service-rail>
+
+<!-- ===== Apresentação institucional + números ===== -->
+<section class="kx-section kx-section--subtle" aria-labelledby="sobre-title">
+  <div class="kx-container kx-split">
+    <div class="kx-stack kx-stack--lg">
+      <span class="kx-eyebrow" kxReveal="fade-in">{{ 'home.about.eyebrow' | kxT }}</span>
+      <h2 id="sobre-title" [kxSplitText]="'home.about.title' | kxT"></h2>
+      <p class="kx-muted" kxReveal>{{ 'home.about.text' | kxT }}</p>
+      <div kxReveal>
+        <a kxButton="primary" [routerLink]="'company' | kxPath">
+          {{ 'home.about.cta' | kxT }}
+          <kx-icon name="arrow-right" class="kx-btn__icon kx-btn__icon--trail" [size]="18" />
+        </a>
+      </div>
+    </div>
+    <dl class="stats" kxStagger>
+      @for (st of stats(); track st.label) {
+        <div class="sn-stat" kxReveal="fade-up">
+          <dt class="label">{{ st.label }}</dt>
+          <dd class="value">
+            <span [kxCountUp]="st.value" [kxCountFrom]="st.from" [kxCountPlain]="st.plain" [kxCountLocale]="i18n.language().locale"></span>{{ st.suffix }}
+          </dd>
+        </div>
+      }
+    </dl>
+  </div>
+</section>
+
+<!-- ===== Capítulo: Cinema ===== -->
+<kx-chapter
+  tone="brand"
+  [eyebrow]="'home.chapter.eyebrow' | kxT"
+  [title]="'home.chapter.title' | kxT"
+  [text]="'home.chapter.text' | kxT"
+>
+  <img src="images/cinema-hall.svg" alt="" width="1600" height="900" loading="lazy" />
+</kx-chapter>
+
+<!-- ===== Pesquisa aberta ===== -->
+<section class="kx-section kx-section--subtle" aria-labelledby="pesquisa-title">
+  <div class="kx-container kx-split">
+    <figure class="research-art" kxReveal="image">
+      <img src="images/open-research.svg" alt="" width="1200" height="900" loading="lazy" />
+    </figure>
+    <div class="kx-stack kx-stack--lg">
+      <span class="kx-eyebrow" kxReveal="fade-in">{{ 'home.research.eyebrow' | kxT }}</span>
+      <h2 id="pesquisa-title" [kxSplitText]="'home.research.title' | kxT"></h2>
+      <p class="kx-muted" kxReveal>{{ 'home.research.text' | kxT }}</p>
+      <div class="kx-row" kxReveal>
+        <a kxButton="primary" [routerLink]="'research' | kxPath">{{ 'home.research.ctaList' | kxT }}</a>
+        <sn-signup-link variant="ghost" labelKey="home.research.ctaSignup" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<kx-cta-band [title]="'home.band.title' | kxT" [text]="'home.band.text' | kxT">
+  <a kxButton="accent" kxSize="lg" [routerLink]="'contact' | kxPath">
+    {{ 'common.talkToSpecialist' | kxT }}
+    <kx-icon name="arrow-right" class="kx-btn__icon kx-btn__icon--trail" [size]="18" />
+  </a>
+</kx-cta-band>

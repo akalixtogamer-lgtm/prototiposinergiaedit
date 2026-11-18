@@ -1,0 +1,128 @@
+// =============================================================================
+// kalixto-ui · Botões (estados: padrão, hover, focus, active, disabled, loading)
+// Uso: <a kxButton variant="primary">…</a>  ou  class="kx-btn kx-btn--primary"
+// =============================================================================
+@use 'tokens' as *;
+
+.kx-btn {
+  --_bg: transparent;
+  --_fg: var(--kx-color-fg);
+  --_bd: transparent;
+  --_bg-hover: var(--_bg);
+  --_fg-hover: var(--_fg);
+  --_bd-hover: var(--_bd);
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--kx-space-1);
+  min-height: 48px; // alvo de toque ≥ 44px (WCAG 2.5.8)
+  padding: 12px 24px;
+  border: 1px solid var(--_bd);
+  border-radius: var(--kx-radius-md);
+  background: var(--_bg);
+  color: var(--_fg);
+  font: 600 0.95rem / 1.2 var(--kx-font-body);
+  text-decoration: none;
+  cursor: pointer;
+  isolation: isolate;
+  overflow: hidden;
+  transition:
+    background-color var(--kx-duration-fast) var(--kx-ease-standard),
+    color var(--kx-duration-fast) var(--kx-ease-standard),
+    border-color var(--kx-duration-fast) var(--kx-ease-standard),
+    transform var(--kx-duration-instant) var(--kx-ease-standard),
+    box-shadow var(--kx-duration-fast) var(--kx-ease-standard);
+
+  // Button Transition: preenchimento que sobe a partir da base no hover
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--_bg-hover);
+    transform: translateY(101%);
+    transition: transform var(--kx-duration-base) var(--kx-ease-out);
+  }
+
+  .kx-btn__icon {
+    width: 18px;
+    height: 18px;
+    flex: none;
+    transition: transform var(--kx-duration-base) var(--kx-ease-out);
+  }
+
+  @media (hover: hover) {
+    &:hover:not([aria-disabled='true']):not(:disabled) {
+      color: var(--_fg-hover);
+      border-color: var(--_bd-hover);
+      &::before { transform: translateY(0); }
+      .kx-btn__icon--trail { transform: translateX(4px); }
+    }
+  }
+
+  &:active:not([aria-disabled='true']):not(:disabled) { transform: scale(0.97); }
+
+  &:disabled,
+  &[aria-disabled='true'] {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+
+  &[aria-busy='true'] {
+    cursor: progress;
+    color: transparent !important;
+    &::after {
+      content: '';
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--_fg);
+      border-right-color: transparent;
+      border-radius: 50%;
+      animation: kx-spin 700ms linear infinite;
+    }
+  }
+}
+
+.kx-btn--primary {
+  --_bg: var(--kx-color-action);
+  --_fg: var(--kx-color-on-action);
+  --_bg-hover: var(--kx-color-action-hover);
+}
+.kx-btn--accent {
+  --_bg: var(--kx-color-accent);
+  --_fg: var(--kx-color-on-accent);
+  --_bg-hover: var(--kx-color-accent-hover);
+}
+.kx-btn--ghost {
+  --_fg: var(--kx-color-fg);
+  --_bd: var(--kx-color-line-strong);
+  --_bg-hover: var(--kx-color-fg);
+  --_fg-hover: var(--kx-color-bg);
+  --_bd-hover: var(--kx-color-fg);
+}
+.kx-btn--ghost-inverse {
+  --_fg: var(--kx-color-fg-inverse);
+  --_bd: rgba(255, 255, 255, 0.55);
+  --_bg-hover: var(--kx-color-fg-inverse);
+  --_fg-hover: var(--kx-color-brand-deep);
+  --_bd-hover: var(--kx-color-fg-inverse);
+}
+.kx-btn--link {
+  min-height: 44px;
+  padding: 0;
+  --_fg: var(--kx-color-brand);
+  &::before { display: none; }
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  @media (hover: hover) {
+    &:hover { --_fg-hover: var(--kx-color-action-hover); text-decoration-thickness: 2px; }
+  }
+}
+.kx-btn--sm { min-height: 40px; padding: 8px 16px; font-size: var(--kx-text-sm); }
+.kx-btn--lg { min-height: 56px; padding: 16px 32px; font-size: 1.05rem; }
+.kx-btn--block { width: 100%; }
+
+@keyframes kx-spin { to { transform: rotate(360deg); } }

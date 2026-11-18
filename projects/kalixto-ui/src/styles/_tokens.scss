@@ -1,0 +1,151 @@
+// =============================================================================
+// kalixto-ui · Design tokens
+// Todos os componentes da biblioteca leem APENAS variáveis --kx-*.
+// Para aplicar a identidade de um projeto, sobrescreva estas variáveis no
+// :root do app (ver projects/sinergia-site/src/styles/_brand.scss).
+// Espaçamento em múltiplos de 8px (com meio passo de 4px para ajustes finos).
+// =============================================================================
+
+// Breakpoints (usados também em TS: ver KX_BREAKPOINTS)
+$kx-breakpoints: (
+  xs: 360px,   // smartphone pequeno
+  sm: 480px,   // smartphone
+  md: 768px,   // tablet
+  lg: 1024px,  // notebook
+  xl: 1280px,  // desktop
+  xxl: 1600px  // desktop grande
+);
+
+@mixin kx-up($bp) {
+  @media (min-width: map-get($kx-breakpoints, $bp)) { @content; }
+}
+@mixin kx-down($bp) {
+  @media (max-width: calc(#{map-get($kx-breakpoints, $bp)} - 0.02px)) { @content; }
+}
+
+:root {
+  // ---- Cores neutras (padrão) ----
+  --kx-color-bg: #ffffff;
+  --kx-color-bg-subtle: #f6f7f6;
+  --kx-color-surface: #ffffff;
+  --kx-color-surface-raised: #f1f3f1;
+  --kx-color-surface-inverse: #141414;
+  --kx-color-fg: #1a1a1a;
+  --kx-color-fg-muted: #555b56;
+  --kx-color-fg-subtle: #6b716c;
+  --kx-color-fg-inverse: #ffffff;
+  --kx-color-fg-inverse-muted: rgba(255, 255, 255, 0.78);
+  --kx-color-line: #dcdfdc;
+  --kx-color-line-strong: #9ea39e;
+
+  // ---- Cores de marca (sobrescrever no app) ----
+  --kx-color-brand: #1f6b35;
+  --kx-color-brand-strong: #0b3a10;
+  --kx-color-brand-deep: #062904;
+  --kx-color-brand-soft: #eaf7ee;
+  --kx-color-action: #1f6b35;
+  --kx-color-action-hover: #165028;
+  --kx-color-on-action: #ffffff;
+  --kx-color-accent: #edb161;
+  --kx-color-accent-hover: #f3d6ab;
+  --kx-color-on-accent: #062904;
+  --kx-color-focus: #edb161;
+
+  // ---- Estados ----
+  --kx-color-success-bg: #eaf7ee;
+  --kx-color-success-fg: #165028;
+  --kx-color-danger-bg: #fdeeec;
+  --kx-color-danger-fg: #8a1f1a;
+  --kx-color-warning-bg: #fdf6ea;
+  --kx-color-warning-fg: #7a4a22;
+
+  // ---- WhatsApp (cor oficial do botão) ----
+  --kx-color-whatsapp: #1fa855;
+  --kx-color-whatsapp-hover: #178a45;
+
+  // ---- Tipografia ----
+  --kx-font-display: Georgia, 'Times New Roman', serif;
+  --kx-font-body: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --kx-font-mono: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+
+  --kx-text-xs: 0.75rem;   // 12
+  --kx-text-sm: 0.875rem;  // 14
+  --kx-text-md: 1rem;      // 16
+  --kx-text-lg: 1.125rem;  // 18
+  --kx-text-xl: 1.375rem;  // 22
+  --kx-text-h3: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --kx-text-h2: clamp(1.75rem, 1.3rem + 2vw, 2.75rem);
+  --kx-text-h1: clamp(2.25rem, 1.4rem + 4vw, 4.5rem);
+  --kx-text-display: clamp(2.75rem, 1.2rem + 7vw, 7rem);
+
+  --kx-leading-tight: 1.08;
+  --kx-leading-snug: 1.25;
+  --kx-leading-body: 1.6;
+  --kx-tracking-tight: -0.02em;
+  --kx-tracking-label: 0.1em;
+
+  // ---- Espaçamento (base 8px) ----
+  --kx-space-0-5: 4px;
+  --kx-space-1: 8px;
+  --kx-space-2: 16px;
+  --kx-space-3: 24px;
+  --kx-space-4: 32px;
+  --kx-space-5: 40px;
+  --kx-space-6: 48px;
+  --kx-space-8: 64px;
+  --kx-space-10: 80px;
+  --kx-space-12: 96px;
+  --kx-space-16: 128px;
+  --kx-section-y: clamp(64px, 4rem + 4vw, 128px);
+
+  // ---- Grid e containers ----
+  --kx-container: 1240px;
+  --kx-container-narrow: 760px;
+  --kx-gutter: clamp(16px, 4vw, 40px);
+  --kx-grid-gap: clamp(16px, 2vw, 24px);
+
+  // ---- Bordas, raios e sombras ----
+  --kx-border: 1px solid var(--kx-color-line);
+  --kx-radius-sm: 4px;
+  --kx-radius-md: 8px;
+  --kx-radius-lg: 16px;
+  --kx-radius-xl: 24px;
+  --kx-radius-pill: 999px;
+  --kx-shadow-sm: 0 1px 2px rgba(8, 20, 10, 0.06), 0 1px 3px rgba(8, 20, 10, 0.08);
+  --kx-shadow-md: 0 8px 24px -8px rgba(8, 20, 10, 0.18);
+  --kx-shadow-lg: 0 24px 48px -16px rgba(8, 20, 10, 0.28);
+
+  // ---- Movimento (espelha KX_MOTION em TS) ----
+  --kx-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --kx-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --kx-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --kx-duration-instant: 120ms;
+  --kx-duration-fast: 200ms;
+  --kx-duration-base: 400ms;
+  --kx-duration-slow: 700ms;
+  --kx-duration-slower: 1000ms;
+  --kx-reveal-distance: 32px;
+
+  // ---- Camadas (z-index) ----
+  --kx-z-base: 1;
+  --kx-z-raised: 10;
+  --kx-z-sticky: 50;
+  --kx-z-header: 100;
+  --kx-z-fab: 150;
+  --kx-z-overlay: 200;
+  --kx-z-skip: 300;
+
+  // ---- Header ----
+  --kx-header-h: 72px;
+  --kx-header-h-compact: 60px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --kx-duration-fast: 0ms;
+    --kx-duration-base: 0ms;
+    --kx-duration-slow: 0ms;
+    --kx-duration-slower: 0ms;
+    --kx-reveal-distance: 0px;
+  }
+}

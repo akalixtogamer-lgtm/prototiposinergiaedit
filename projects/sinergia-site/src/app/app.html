@@ -1,0 +1,40 @@
+<a class="kx-skip-link" href="#conteudo" (click)="focusMain($event)">{{ 'a11y.skip' | kxT }}</a>
+<kx-scroll-progress />
+
+<kx-header [floating]="true">
+  <a kxHeaderLogo class="brand" [routerLink]="'home' | kxPath" [attr.aria-label]="'a11y.home' | kxT">
+    <img src="images/logo-sinergia-white.webp" alt="" width="239" height="167" />
+  </a>
+  <a kxHeaderActions kxButton="accent" kxSize="sm" [routerLink]="'contact' | kxPath">{{ 'nav.cta' | kxT }}</a>
+  <a kxHeaderMobileFoot kxButton="accent" [routerLink]="'contact' | kxPath">{{ 'nav.cta' | kxT }}</a>
+</kx-header>
+
+<main id="conteudo" tabindex="-1">
+  <router-outlet />
+</main>
+
+<kx-footer wordmark="Sinergia">
+  <div kxFooterBrand class="f-brand">
+    <img src="images/logo-sinergia-white.webp" alt="Sinergia Research & Intelligence" width="239" height="167" loading="lazy" />
+    <p>{{ 'footer.tagline' | kxT }}</p>
+  </div>
+  <div kxFooterAside class="f-aside">
+    <sn-contact-channels [inverse]="true" />
+    <a kxButton="ghost-inverse" [routerLink]="'contact' | kxPath">
+      {{ 'common.talkToSpecialist' | kxT }}
+      <kx-icon name="arrow-right" class="kx-btn__icon kx-btn__icon--trail" [size]="18" />
+    </a>
+  </div>
+  <div kxFooterLegal class="f-legal">
+    <span>{{ 'footer.rights' | kxT: { year } }}</span>
+    <span class="f-legal-links">
+      <a href="#conteudo" (click)="toTop($event)">{{ 'footer.backToTop' | kxT }} ↑</a>
+      <!-- Acesso administrativo: discreto, sem destaque visual (mapa de arquitetura) -->
+      <a class="f-admin" [routerLink]="'admin' | kxPath" rel="nofollow">
+        <kx-icon name="lock" [size]="14" />{{ 'footer.admin' | kxT }}
+      </a>
+    </span>
+  </div>
+</kx-footer>
+
+<kx-whatsapp-fab />

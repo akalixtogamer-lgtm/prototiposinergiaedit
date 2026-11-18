@@ -1,0 +1,65 @@
+// =============================================================================
+// kalixto-ui · Motion
+// Estado inicial e final de cada efeito. Duração, atraso e easing chegam por
+// variáveis CSS que a diretiva [kxReveal] escreve a partir de KX_MOTION (TS),
+// então a configuração fica centralizada em um único lugar.
+// Sem JS (ou com prefers-reduced-motion) o conteúdo aparece direto.
+// =============================================================================
+
+.kx-reveal {
+  --kx-r-duration: var(--kx-duration-slow);
+  --kx-r-delay: 0ms;
+  --kx-r-ease: var(--kx-ease-out);
+  --kx-r-distance: var(--kx-reveal-distance);
+  transition:
+    opacity var(--kx-r-duration) var(--kx-r-ease) var(--kx-r-delay),
+    transform var(--kx-r-duration) var(--kx-r-ease) var(--kx-r-delay),
+    clip-path var(--kx-r-duration) var(--kx-r-ease) var(--kx-r-delay),
+    filter var(--kx-r-duration) var(--kx-r-ease) var(--kx-r-delay);
+  will-change: opacity, transform;
+}
+
+// Estados iniciais (só quando o JS marcou o documento como pronto para animar)
+.kx-motion-ready {
+  .kx-reveal--fade-in:not(.is-visible) { opacity: 0; }
+  .kx-reveal--fade-up:not(.is-visible) { opacity: 0; transform: translate3d(0, var(--kx-r-distance), 0); }
+  .kx-reveal--fade-down:not(.is-visible) { opacity: 0; transform: translate3d(0, calc(var(--kx-r-distance) * -1), 0); }
+  .kx-reveal--slide-left:not(.is-visible) { opacity: 0; transform: translate3d(calc(var(--kx-r-distance) * 1.5), 0, 0); }
+  .kx-reveal--slide-right:not(.is-visible) { opacity: 0; transform: translate3d(calc(var(--kx-r-distance) * -1.5), 0, 0); }
+  .kx-reveal--scale-in:not(.is-visible) { opacity: 0; transform: scale(0.94); }
+  .kx-reveal--image:not(.is-visible) { clip-path: inset(12% 6% 12% 6% round var(--kx-radius-lg)); transform: scale(1.06); opacity: 0.2; }
+  .kx-reveal--section:not(.is-visible) { opacity: 0; transform: translate3d(0, calc(var(--kx-r-distance) * 2), 0); }
+}
+
+// Estado final
+.kx-reveal.is-visible { opacity: 1; transform: none; clip-path: inset(0 0 0 0 round 0); }
+.kx-reveal--image.is-visible { clip-path: inset(0 0 0 0 round var(--kx-radius-lg)); }
+
+// ---- Text Reveal (palavras sobem de dentro de uma máscara) ----
+.kx-split-word-mask { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: 0.08em; margin-bottom: -0.08em; }
+.kx-split-word {
+  display: inline-block;
+  transition: transform var(--kx-duration-slower) var(--kx-ease-out);
+  transition-delay: calc(var(--kx-word-i, 0) * 45ms + var(--kx-r-delay, 0ms));
+}
+.kx-motion-ready .kx-split-text:not(.is-visible) .kx-split-word { transform: translate3d(0, 110%, 0); }
+
+// ---- Hover: Image Zoom / Card Lift / Overlay Reveal ----
+.kx-hover-zoom { overflow: hidden; }
+.kx-hover-zoom img, .kx-hover-zoom svg, .kx-hover-zoom .kx-hover-zoom__media {
+  transition: transform var(--kx-duration-slow) var(--kx-ease-out);
+}
+@media (hover: hover) {
+  .kx-hover-zoom:hover img, .kx-hover-zoom:hover svg, .kx-hover-zoom:hover .kx-hover-zoom__media { transform: scale(1.05); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kx-reveal, .kx-split-word { transition: none !important; }
+  .kx-motion-ready .kx-reveal:not(.is-visible),
+  .kx-motion-ready .kx-split-text:not(.is-visible) .kx-split-word { opacity: 1 !important; transform: none !important; clip-path: none !important; }
+  html { scroll-behavior: auto !important; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}

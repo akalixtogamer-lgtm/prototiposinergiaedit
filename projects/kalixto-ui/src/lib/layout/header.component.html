@@ -1,0 +1,143 @@
+<div class="bar">
+  <div class="kx-container inner">
+    <div class="logo"><ng-content select="[kxHeaderLogo]" /></div>
+
+    <!-- Navegação desktop -->
+    <nav class="nav" [attr.aria-label]="navLabelKey() | kxT">
+      <ul role="list" class="nav-list">
+        @for (item of cfg.nav; track item.label; let i = $index) {
+          @if (item.children?.length) {
+            <li
+              class="nav-item has-dd"
+              [class.is-open]="openDropdown() === i"
+              (mouseenter)="hoverOpen(i)"
+              (mouseleave)="hoverClose()"
+              (focusout)="onFocusOut($event)"
+            >
+              <button
+                type="button"
+                class="nav-link"
+                [class.is-active]="isActiveParent(item)"
+                [attr.aria-expanded]="openDropdown() === i"
+                [attr.aria-controls]="'kx-dd-' + i"
+                (click)="toggleDropdown(i)"
+                (keydown)="onTriggerKey($event, i)"
+              >
+                {{ item.label | kxT }}
+                <kx-icon name="chevron-down" [size]="16" class="chev" />
+              </button>
+              <div class="dd" [id]="'kx-dd-' + i" (keydown)="onDropdownKey($event)">
+                <ul role="list">
+                  @for (child of item.children; track child.label) {
+                    <li>
+                      <a
+                        [routerLink]="child.page! | kxPath"
+                        [fragment]="child.fragment"
+                        routerLinkActive="is-active"
+                        [routerLinkActiveOptions]="{ paths: 'exact', queryParams: 'ignored', fragment: 'ignored', matrixParams: 'ignored' }"
+                        ariaCurrentWhenActive="page"
+                      >
+                        <span class="dd-title">{{ child.label | kxT }}</span>
+                        @if (child.description) {
+                          <span class="dd-desc">{{ child.description | kxT }}</span>
+                        }
+                      </a>
+                    </li>
+                  }
+                </ul>
+              </div>
+            </li>
+          } @else {
+            <li class="nav-item">
+              @if (item.href) {
+                <a class="nav-link" [href]="item.href" target="_blank" rel="noopener">
+                  {{ item.label | kxT }}<span class="kx-sr-only"> ({{ 'a11y.newTab' | kxT }})</span>
+                </a>
+              } @else {
+                <a
+                  class="nav-link"
+                  [routerLink]="item.page! | kxPath"
+                  [fragment]="item.fragment"
+                  routerLinkActive="is-active"
+                  [routerLinkActiveOptions]="{ paths: 'exact', queryParams: 'ignored', fragment: 'ignored', matrixParams: 'ignored' }"
+                  ariaCurrentWhenActive="page"
+                >{{ item.label | kxT }}</a>
+              }
+            </li>
+          }
+        }
+      </ul>
+    </nav>
+
+    <div class="tools">
+      <kx-lang-switch class="lang" [label]="langLabelKey() | kxT" />
+      <div class="actions"><ng-content select="[kxHeaderActions]" /></div>
+      <button
+        #toggle
+        type="button"
+        class="menu-btn"
+        [attr.aria-expanded]="mobileOpen()"
+        aria-controls="kx-mobile-panel"
+        (click)="toggleMobile()"
+      >
+        <span class="menu-icon" aria-hidden="true"><i></i><i></i></span>
+        <span>{{ (mobileOpen() ? closeLabelKey() : menuLabelKey()) | kxT }}</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Painel mobile (tela cheia) -->
+<div
+  #panel
+  id="kx-mobile-panel"
+  class="panel"
+  [attr.aria-hidden]="!mobileOpen()"
+  [attr.inert]="mobileOpen() ? null : ''"
+  (keydown)="trapFocus($event)"
+>
+  <nav class="kx-container panel-inner" [attr.aria-label]="navLabelKey() | kxT">
+    <ul role="list" class="m-list">
+      @for (item of cfg.nav; track item.label; let i = $index) {
+        <li class="m-item" [style.--i]="i">
+          @if (item.children?.length) {
+            <button
+              type="button"
+              class="m-link"
+              [attr.aria-expanded]="openAccordion() === i"
+              [attr.aria-controls]="'kx-acc-' + i"
+              (click)="toggleAccordion(i)"
+            >
+              {{ item.label | kxT }}
+              <kx-icon name="chevron-down" [size]="28" class="chev" />
+            </button>
+            <div class="m-sub" [id]="'kx-acc-' + i" [class.is-open]="openAccordion() === i">
+              <ul role="list" class="m-sub-inner">
+                @for (child of item.children; track child.label) {
+                  <li>
+                    <a [routerLink]="child.page! | kxPath" [fragment]="child.fragment">{{ child.label | kxT }}</a>
+                  </li>
+                }
+              </ul>
+            </div>
+          } @else if (item.href) {
+            <a class="m-link" [href]="item.href" target="_blank" rel="noopener">{{ item.label | kxT }}</a>
+          } @else {
+            <a
+              class="m-link"
+              [routerLink]="item.page! | kxPath"
+              [fragment]="item.fragment"
+              routerLinkActive="is-active"
+              [routerLinkActiveOptions]="{ paths: 'exact', queryParams: 'ignored', fragment: 'ignored', matrixParams: 'ignored' }"
+              ariaCurrentWhenActive="page"
+            >{{ item.label | kxT }}</a>
+          }
+        </li>
+      }
+    </ul>
+    <div class="m-foot">
+      <kx-lang-switch [label]="langLabelKey() | kxT" />
+      <ng-content select="[kxHeaderMobileFoot]" />
+    </div>
+  </nav>
+</div>

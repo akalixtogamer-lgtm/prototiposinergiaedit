@@ -1,0 +1,14 @@
+[
+  {
+    "id": "exemplo-estrutura",
+    "visibility": "public",
+    "status": "open",
+    "title": { "pt": "TÍTULO DA PESQUISA", "en": "STUDY TITLE" },
+    "description": { "pt": "Descrição curta do estudo.", "en": "Short description of the study." },
+    "audience": { "pt": "Perfil de quem pode participar.", "en": "Who can take part." },
+    "requirements": { "pt": "Requisitos (opcional).", "en": "Requirements (optional)." },
+    "duration": { "pt": "cerca de N minutos", "en": "about N minutes" },
+    "deadline": "AAAA-MM-DD",
+    "url": "https://link-de-participacao"
+  }
+]

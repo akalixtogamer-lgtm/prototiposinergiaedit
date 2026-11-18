@@ -1,0 +1,79 @@
+// =============================================================================
+// Identidade Sinergia aplicada sobre os tokens da kalixto-ui, TEMA ESCURO.
+//
+// Direção (referências da cliente: Cinemetrics, Screen Engine, iScreeningRoom,
+// Datatainment e o card Addifico): sala de projeção escura, mas com a cor da
+// Sinergia, verde quase preto em vez de preto genérico; areia como o "dourado"
+// dos CTAs; verde-menta para ícones, links e cards ativos; títulos em serif.
+// Paleta original preservada (verde 950-50, areia 50-800); só os papéis mudaram.
+// Fontes hospedadas no próprio site (@fontsource): sem chamadas ao Google.
+// =============================================================================
+
+:root {
+  color-scheme: dark;
+
+  // ---- Paleta Sinergia (protótipo aprovado) ----
+  --sn-green-950: #073302;
+  --sn-green-900: #0e4212;
+  --sn-green-800: #1b5423;
+  --sn-green-700: #236a36;
+  --sn-green-600: #2c8149;
+  --sn-green-400: #6cbc83;
+  --sn-green-300: #98d7aa;
+  --sn-green-200: #bfe9cb;
+  --sn-green-50: #eefbf2;
+  --sn-sand-50: #fdf6ea;
+  --sn-sand-200: #f3d6ab;
+  --sn-sand-400: #edb161;
+  --sn-sand-800: #814c24;
+
+  // ---- Neutros escuros com tom verde (camadas de profundidade) ----
+  --sn-ink-0: #050806;   // mais fundo (footer, capítulo)
+  --sn-ink-1: #090e0a;   // fundo da página
+  --sn-ink-2: #0e1510;   // seção alternada
+  --sn-ink-3: #141d16;   // superfície (cards)
+  --sn-ink-4: #1b261d;   // superfície elevada / hover
+
+  // ---- Mapeamento para os tokens da biblioteca ----
+  --kx-color-bg: var(--sn-ink-1);
+  --kx-color-bg-subtle: var(--sn-ink-2);
+  --kx-color-surface: var(--sn-ink-3);
+  --kx-color-surface-raised: var(--sn-ink-4);
+  --kx-color-surface-inverse: var(--sn-ink-0);
+  --kx-color-fg: #ecf2ed;
+  --kx-color-fg-muted: #b3bdb5;
+  --kx-color-fg-subtle: #919c93;
+  --kx-color-fg-inverse: #ffffff;
+  --kx-color-fg-inverse-muted: rgba(236, 242, 237, 0.74);
+  --kx-color-line: rgba(255, 255, 255, 0.09);
+  --kx-color-line-strong: rgba(255, 255, 255, 0.24);
+
+  --kx-color-brand: var(--sn-green-300);          // menta: links, ícones, eyebrows
+  --kx-color-brand-strong: var(--sn-green-900);
+  --kx-color-brand-deep: #08130a;                 // header, hero, faixas
+  --kx-color-brand-soft: rgba(152, 215, 170, 0.12);
+  --kx-color-action: var(--sn-green-300);         // botão primário menta
+  --kx-color-action-hover: var(--sn-green-200);
+  --kx-color-on-action: #06210a;
+  --kx-color-accent: var(--sn-sand-400);          // dourado Sinergia: CTA principal
+  --kx-color-accent-hover: var(--sn-sand-200);
+  --kx-color-on-accent: #1a1204;
+  --kx-color-focus: var(--sn-sand-400);
+
+  --kx-color-success-bg: rgba(152, 215, 170, 0.12);
+  --kx-color-success-fg: var(--sn-green-200);
+  --kx-color-danger-bg: rgba(255, 138, 128, 0.12);
+  --kx-color-danger-fg: #ffb4ab;
+  --kx-color-warning-bg: rgba(237, 177, 97, 0.12);
+  --kx-color-warning-fg: var(--sn-sand-200);
+
+  --kx-chapter-tone: var(--sn-green-700);   // painel do capítulo: verde da marca, não menta
+
+  --kx-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --kx-shadow-md: 0 16px 32px -12px rgba(0, 0, 0, 0.7);
+  --kx-shadow-lg: 0 32px 64px -20px rgba(0, 0, 0, 0.85);
+
+  --kx-font-display: 'Source Serif 4 Variable', 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --kx-font-body: 'IBM Plex Sans', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --kx-font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+}

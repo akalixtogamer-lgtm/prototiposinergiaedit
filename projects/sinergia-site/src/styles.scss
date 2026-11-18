@@ -1,0 +1,7 @@
+// Estilos globais do site Sinergia
+// 1) Biblioteca (tokens + base + botões + motion), caminho via stylePreprocessorOptions
+@use 'kx';
+// 2) Identidade da marca por cima dos tokens
+@use 'styles/brand';
+// 3) Padrões do app (page hero, seções compartilhadas)
+@use 'styles/patterns';
